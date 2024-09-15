@@ -81,10 +81,33 @@
             let result = solveRecurrence(a, b, c, a1, a2);
             let solutionDiv = document.getElementById("solution");
 
+            function formatCoefficient(coefficient) {
+                // Check if the coefficient is positive or negative and add the appropriate sign
+                if (coefficient >= 0) {
+                    return `${coefficient.toFixed(2)}`;
+                } else {
+                    return `<img src="https://latex.codecogs.com/svg.image?-" /> ${Math.abs(coefficient).toFixed(2)}`;
+                }
+            }
+
             if (result.x1 !== null && result.x2 !== null) {
-                solutionDiv.innerHTML = `<span class="result-text"><img src = https://latex.codecogs.com/svg.image?a_{n}= /> ${result.A.toFixed(2)} <img src = https://latex.codecogs.com/svg.image?%2A%28 />${result.x1.toFixed(2)}<img src = https://latex.codecogs.com/svg.image?%29^{n-1} /> <img src = https://latex.codecogs.com/svg.image?&plus; /> ${result.B.toFixed(2)} <img src = https://latex.codecogs.com/svg.image?%2A%28 />${result.x2.toFixed(2)}<img src = https://latex.codecogs.com/svg.image?%29^{n-1} /></span>`;
+                solutionDiv.innerHTML = `<span class="result-text">
+                    <img src = https://latex.codecogs.com/svg.image?a_{n}= /> 
+                    ${result.A.toFixed(2)} 
+                    <img src = https://latex.codecogs.com/svg.image?%2A%28 />${result.x1.toFixed(2)}
+                    <img src = https://latex.codecogs.com/svg.image?%29^{n-1} />
+                    ${formatCoefficient(result.B)} 
+                    <img src = https://latex.codecogs.com/svg.image?%2A%28 />${result.x2.toFixed(2)}<img src = https://latex.codecogs.com/svg.image?%29^{n-1} /></span>`;
             } else if (result.x1 !== null) {
-                solutionDiv.innerHTML = `<span class="result-text"><img src = https://latex.codecogs.com/svg.image?a_{n}= /> <img src = https://latex.codecogs.com/svg.image?%28 />${result.A.toFixed(2)} <img src = https://latex.codecogs.com/svg.image?%2A%28n-1%29 /> <img src = https://latex.codecogs.com/svg.image?+ /> ${result.B.toFixed(2)}<img src = https://latex.codecogs.com/svg.image?%29%2A%28 />${result.x1.toFixed(2)}<img src = https://latex.codecogs.com/svg.image?%29^{n-1} /></span>`;
+                solutionDiv.innerHTML = `<span class="result-text">
+                    <img src = https://latex.codecogs.com/svg.image?a_{n}= /> 
+                    <img src = https://latex.codecogs.com/svg.image?%28 />
+                    ${result.A.toFixed(2)} 
+                    <img src = https://latex.codecogs.com/svg.image?%2A%28n-1%29+ /> 
+                    ${result.B.toFixed(2)}
+                    <img src = https://latex.codecogs.com/svg.image?%29%2A%28 />
+                    ${result.x1.toFixed(2)}
+                    <img src = https://latex.codecogs.com/svg.image?%29^{n-1} /></span>`;
             } else {
                 solutionDiv.innerHTML = result.B;
             }
