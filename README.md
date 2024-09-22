@@ -5,7 +5,7 @@ recurrence.py is the original Python code.
 
 https://sota-mitsumori.github.io/Recurrence-Relation/
 
-9/22/24 
+9/22/24 Version 1.1
 
         The website now supports Japanese
 
