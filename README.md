@@ -6,7 +6,9 @@ recurrence.py is the original Python code.
 https://sota-mitsumori.github.io/Recurrence-Relation/
 
 9/22/24 
-  The website now supports Japanese
+
+        The website now supports Japanese
+
 
 <img width="1523" alt="Screenshot 2024-09-15 at 23 21 21" src="https://github.com/user-attachments/assets/70f0e0bd-1137-4258-9e7f-47ba88a1e2a3">
 
