@@ -4,6 +4,12 @@ body {
     padding: 20px;
 }
 
+select {
+    padding: 10px;
+    margin: 20px 20px;
+    border-radius: 5px;
+}
+
 .container {
     background-color: #fff;
     padding: 20px;
