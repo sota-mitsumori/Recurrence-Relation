@@ -1,12 +1,15 @@
-# Recurrence-Relation
-This is the website that allows you to solve the recurrence relation problems.
+# 隣接3項間漸化式計算機/Recurrence-Relation
 
+これは、隣接3項間漸化式を自動で解くウェブサイトです。reccurence.pyは、オリジナルのPythonコードです。</br>
+This is the website that allows you to solve the recurrence relation problems.
 recurrence.py is the original Python code. 
 
+Available at:
 https://sota-mitsumori.github.io/Recurrence-Relation/
 
 9/22/24 Version 1.1
-
+        
+        ウェブサイトの日本語対応
         The website now supports Japanese
 
 
