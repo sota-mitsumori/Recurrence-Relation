@@ -5,7 +5,7 @@ This is the website that allows you to solve the recurrence relation problems.
 recurrence.py is the original Python code. 
 
 Available at:
-https://sota-mitsumori.github.io/Recurrence-Relation/
+https://recurrence-relation.vercel.app/
 
 9/22/24 Version 1.1
         
