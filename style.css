@@ -2,25 +2,142 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     padding: 20px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.header {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-top: -20px;
+    margin-bottom: 30px;
+    width: calc(100% + 40px);
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header-title h1 {
+    margin: 0;
+    color: #ecf0f1;
+    font-size: 1.8em;
+}
+
+.header-language {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-language label {
+    color: #ecf0f1;
+    margin: 0;
+    font-size: 0.9em;
 }
 
 select {
-    padding: 10px;
-    margin: 20px 20px;
+    padding: 8px 12px;
     border-radius: 5px;
+    border: 1px solid #34495e;
+    background-color: #34495e;
+    color: #ecf0f1;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+select:hover {
+    background-color: #3d566e;
+}
+
+select:focus {
+    outline: none;
+    border-color: #3498db;
 }
 
 .container {
     background-color: #fff;
-    padding: 20px;
+    padding: 30px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
 }
 
-h1 {
+.container h1 {
     text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    display: none; /* Hide h1 in container since it's now in header */
+}
+
+h2 {
+    color: #2c3e50;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+h3 {
+    color: #34495e;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.content-section {
+    margin-bottom: 40px;
+}
+
+.content-section p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.content-section ul, .content-section ol {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+.content-section li {
+    margin-bottom: 10px;
+}
+
+.formula {
+    text-align: center;
+    font-size: 1.1em;
+    font-style: italic;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-left: 4px solid #3498db;
+}
+
+.faq-item {
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.faq-item h3 {
+    margin-top: 0;
+    color: #2980b9;
+}
+
+.faq-item p {
+    margin-bottom: 0;
 }
 
 label {
@@ -96,7 +213,121 @@ button:hover {
 
 .result-text {
     width: 100%;
-    height: 50px;
+    min-height: 50px;
     font-size: 24px;
     font-family: 'Cambria Math';
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 30px 20px;
+    margin-top: 50px;
+    margin-left: -20px;
+    margin-right: -20px;
+    width: calc(100% + 40px);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    margin-bottom: 15px;
+}
+
+.footer-links a {
+    color: #ecf0f1;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #3498db;
+}
+
+.footer-separator {
+    color: #7f8c8d;
+    margin: 0 5px;
+}
+
+.footer-copyright {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #bdc3c7;
+}
+
+.back-link {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.back-link a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.back-link a:hover {
+    color: #2980b9;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h2 {
+        font-size: 1.3em;
+    }
+    
+    .content-section ul, .content-section ol {
+        margin-left: 20px;
+    }
+    
+    .header {
+        margin-left: -20px;
+        margin-right: -20px;
+        margin-top: -20px;
+        width: calc(100% + 40px);
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .header-title h1 {
+        font-size: 1.5em;
+    }
+    
+    .header-language {
+        justify-content: center;
+    }
+    
+    .footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        width: calc(100% + 40px);
+    }
+    
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .footer-separator {
+        display: none;
+    }
 }
