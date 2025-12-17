@@ -4,55 +4,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recurrence Relation Solver</title>
+    <meta name="description" content="Learn about and solve linear homogeneous recurrence relations with constant coefficients. Free online calculator with detailed explanations and examples.">
+    <title>Recurrence Relation Solver - Free Online Calculator</title>
     <link rel="stylesheet" href="style.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7988808089932042"
      crossorigin="anonymous">
     </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
 </head>
 
 <body>
-    <select name="" id="">
-        <option value="en">English</option>
-        <option value="jp">日本語</option>
-    </select>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <h1 id="h1">Recurrence Relation Solver</h1>
+            </div>
+            <div class="header-language">
+                <label for="language-select" id="language-label">Language:</label>
+                <select name="" id="language-select">
+                    <option value="en">English</option>
+                    <option value="jp">日本語</option>
+                </select>
+            </div>
+        </div>
+    </header>
     <div class="container">
-        <h1 id="h1">Recurrence Relation Solver</h1>
-        <form id="recurrence-form">
-            <div class="input-group">
-                <div class="input-block">
-                    <input type="number" id="a" required><br>
-                    <label for="a"><img src="images/an+2.png"></label>
+        
+        <section class="content-section">
+            <h2 id="calculator-title">Recurrence Relation Calculator</h2>
+            <p id="calculator-desc">Enter the coefficients and initial conditions below to solve your recurrence relation:</p>
+            <form id="recurrence-form">
+                <div class="input-group">
+                    <div class="input-block">
+                        <input type="number" id="a" required><br>
+                        <label for="a"><img src="images/an+2.png"></label>
+                    </div>
+
+                    <div class="input-block">
+                        <input type="number" id="b" required><br>
+                        <label for="b"><img src="images/an+1.png"></label>
+                    </div>
+
+                    <div class="input-block">
+                        <input type="number" id="c" required><br>
+                        <label for="c"><img src="images/an.png"></label>
+                    </div>
+
+                    <div class="initial">
+                        <label for="a1"><img src="images/a1.png"></label>
+                        <input type="number" id="a1" required><br>
+                    </div>
+
+                    <div class="initial">
+                        <label for="a2"><img src="images/a2.png"></label>
+                        <input type="number" id="a2" required><br>
+                    </div>
                 </div>
 
-                <div class="input-block">
-                    <input type="number" id="b" required><br>
-                    <label for="b"><img src="images/an+1.png"></label>
+                <button type="submit" id="button">Solve</button>
+            </form>
+
+            <div id="solution"></div>
+        </section>
+        
+        <section class="content-section">
+            <h2 id="intro-title">What is a Recurrence Relation?</h2>
+            <div id="intro-content">
+                <p>A recurrence relation is a mathematical equation that defines a sequence recursively. Each term of the sequence is expressed as a function of the preceding terms. Linear homogeneous recurrence relations with constant coefficients are among the most common types studied in discrete mathematics and computer science.</p>
+                
+                <p>This calculator solves second-order linear homogeneous recurrence relations of the form:</p>
+                <p class="formula">$$a \cdot a_{n+2} + b \cdot a_{n+1} + c \cdot a_n = 0$$</p>
+                
+                <p>where $a$, $b$, and $c$ are constants, and the initial conditions $a_1$ and $a_2$ are given.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 id="howto-title">How to Use This Calculator</h2>
+            <div id="howto-content">
+                <ol>
+                    <li><strong>Enter the coefficients:</strong> Input the values for $a$, $b$, and $c$ from your recurrence relation equation.</li>
+                    <li><strong>Enter initial conditions:</strong> Provide the values for $a_1$ and $a_2$ (the first two terms of your sequence).</li>
+                    <li><strong>Click "Solve":</strong> The calculator will compute the closed-form solution using the characteristic equation method.</li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 id="example-title">Example Problem</h2>
+            <div id="example-content">
+                <p><strong>Example:</strong> Solve the recurrence relation $a_{n+2} - 5a_{n+1} + 6a_n = 0$ with initial conditions $a_1 = 1$ and $a_2 = 5$.</p>
+                
+                <p><strong>Solution:</strong></p>
+                <ol>
+                    <li>The characteristic equation is: $r^2 - 5r + 6 = 0$</li>
+                    <li>Factoring: $(r - 2)(r - 3) = 0$, so $r = 2$ and $r = 3$</li>
+                    <li>Since we have two distinct real roots, the general solution is:
+                        $$a_n = A \cdot 2^{n-1} + B \cdot 3^{n-1}$$
+                    </li>
+                    <li>Using the initial conditions, we find $A = -2$ and $B = 3$</li>
+                    <li>Therefore: $$a_n = -2 \cdot 2^{n-1} + 3 \cdot 3^{n-1}$$</li>
+                </ol>
+                
+                <p>Try entering $a = 1$, $b = -5$, $c = 6$, $a_1 = 1$, and $a_2 = 5$ into the calculator to verify this result!</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 id="method-title">Mathematical Method</h2>
+            <div id="method-content">
+                <p>The solution method used by this calculator is based on the <strong>characteristic equation</strong> technique:</p>
+                
+                <h3>Step 1: Characteristic Equation</h3>
+                <p>For the recurrence relation $a \cdot a_{n+2} + b \cdot a_{n+1} + c \cdot a_n = 0$, we form the characteristic equation:</p>
+                <p class="formula">$$a \cdot r^2 + b \cdot r + c = 0$$</p>
+                
+                <h3>Step 2: Find Roots</h3>
+                <p>We solve for $r$ using the quadratic formula:</p>
+                <p class="formula">$$r = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$</p>
+                
+                <h3>Step 3: General Solution</h3>
+                <p>The form of the solution depends on the discriminant $D = b^2 - 4ac$:</p>
+                <ul>
+                    <li><strong>$D > 0$ (Distinct real roots $r_1$, $r_2$):</strong>
+                        $$a_n = A \cdot r_1^{n-1} + B \cdot r_2^{n-1}$$
+                    </li>
+                    <li><strong>$D = 0$ (Repeated root $r$):</strong>
+                        $$a_n = (A \cdot (n-1) + B) \cdot r^{n-1}$$
+                    </li>
+                    <li><strong>$D < 0$ (Complex roots):</strong>
+                        <br>Currently not supported by this calculator
+                    </li>
+                </ul>
+                
+                <h3>Step 4: Determine Constants</h3>
+                <p>The constants $A$ and $B$ are determined by substituting the initial conditions $a_1$ and $a_2$ into the general solution.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 id="applications-title">Applications</h2>
+            <div id="applications-content">
+                <p>Recurrence relations have numerous applications in various fields:</p>
+                <ul>
+                    <li><strong>Computer Science:</strong> Analyzing algorithm complexity, especially for recursive algorithms like merge sort and binary search</li>
+                    <li><strong>Mathematics:</strong> Studying sequences like Fibonacci numbers, Lucas numbers, and other mathematical sequences</li>
+                    <li><strong>Physics:</strong> Modeling physical systems with discrete time steps</li>
+                    <li><strong>Economics:</strong> Modeling population growth, financial calculations, and economic forecasting</li>
+                    <li><strong>Biology:</strong> Population dynamics and genetic modeling</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 id="faq-title">Frequently Asked Questions</h2>
+            <div id="faq-content">
+                <div class="faq-item">
+                    <h3>What types of recurrence relations can this calculator solve?</h3>
+                    <p>This calculator solves second-order linear homogeneous recurrence relations with constant coefficients. The equation must be of the form $a \cdot a_{n+2} + b \cdot a_{n+1} + c \cdot a_n = 0$.</p>
                 </div>
-
-                <div class="input-block">
-                    <input type="number" id="c" required><br>
-                    <label for="c"><img src="images/an.png"></label>
+                
+                <div class="faq-item">
+                    <h3>What if the discriminant is negative?</h3>
+                    <p>When the discriminant is negative, the characteristic equation has complex roots. The solution involves trigonometric functions. This feature is currently not supported, but may be added in future updates.</p>
                 </div>
-
-
-                <div class="initial">
-                    <label for="a1"><img src="images/a1.png"></label>
-                    <input type="number" id="a1" required><br>
+                
+                <div class="faq-item">
+                    <h3>Can I use this for non-homogeneous recurrence relations?</h3>
+                    <p>No, this calculator is specifically designed for homogeneous recurrence relations (where the right-hand side is zero). For non-homogeneous relations, additional techniques are required.</p>
                 </div>
-
-                <div class="initial">
-                    <label for="a2"><img src="images/a2.png"></label>
-                    <input type="number" id="a2" required><br>
+                
+                <div class="faq-item">
+                    <h3>How accurate are the results?</h3>
+                    <p>The calculator provides results with 2 decimal places. For exact solutions, you may need to perform the calculations manually or use symbolic computation software.</p>
                 </div>
             </div>
-
-            <button type="submit" id="button">Solve</button>
-        </form>
-
-        <div id="solution"></div>
+        </section>
     </div>
 
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="privacy.html" id="privacy-link">Privacy Policy</a>
+                <span class="footer-separator">|</span>
+                <a href="terms.html" id="terms-link">Terms of Service</a>
+            </div>
+            <div class="footer-copyright">
+                <p id="copyright-text">© 2024-2025 Recurrence Relation Solver. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
     <script src="script.js"></script>
 </body>
 
