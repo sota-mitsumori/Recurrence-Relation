@@ -1,22 +1,125 @@
 function solveRecurrence(a, b, c, a1, a2) {
-    let D = b * b - 4 * a * c;
+    if (a === 0) {
+        if (b === 0) {
+            if (c === 0) return { type: "trivial" };
+            if (Math.abs(a1) > 1e-9 || Math.abs(a2) > 1e-9)
+                return { type: "invalid", message: "Only the zero sequence satisfies this relation. Enter $a_1 = a_2 = 0$." };
+            return { type: "zero_sequence" };
+        }
+        const r = -c / b;
+        const expectedA2 = r * a1;
+        if (Math.abs(expectedA2 - a2) > 1e-9)
+            return { type: "invalid", message: `When $a = 0$, $a_2$ is determined by the recurrence. It must be $a_2 = ${parseFloat(expectedA2.toFixed(4))}$.` };
+        return { type: "first_order", r, a1: a1 };
+    }
+
+    const D = b * b - 4 * a * c;
 
     if (D > 0) {
-        let x1 = (-b + Math.sqrt(D)) / (2 * a);
-        let x2 = (-b - Math.sqrt(D)) / (2 * a);
-
-        let A = ((x2 * a1 - a2) / (x2 - x1));
-        let B = ((a2 - x1 * a1) / (x2 - x1));
-
-        return { x1: x1, x2: x2, A: A, B: B };
+        const x1 = (-b + Math.sqrt(D)) / (2 * a);
+        const x2 = (-b - Math.sqrt(D)) / (2 * a);
+        const A = (a2 - x2 * a1) / (x1 - x2);
+        const B = (x1 * a1 - a2) / (x1 - x2);
+        return { type: "two_roots", x1, x2, A, B };
     } else if (D === 0) {
-        let x = -b / (2 * a);
-
-        let A = ((a2 - x * a1) / x);
-        let B = a1;
-        return { x1: x, x2: null, A: A, B: B };
+        const x = -b / (2 * a);
+        const B = a1;
+        if (x === 0) {
+            return { type: "repeated_zero", a1, a2 };
+        }
+        const A = a2 / x - a1;
+        return { type: "repeated", x, A, B };
     } else {
-        return { x1: null, x2: null, A: null, B: "Imaginary roots not supported yet" };
+        const alpha = -b / (2 * a);
+        const beta = Math.sqrt(-D) / (2 * a);
+        const r = Math.sqrt(alpha * alpha + beta * beta);
+        const theta = Math.atan2(beta, alpha);
+        const C1 = a1;
+        const C2 = (a2 / r - C1 * Math.cos(theta)) / Math.sin(theta);
+        return { type: "complex", r, theta, C1, C2 };
+    }
+}
+
+function buildLatex(result) {
+    const fmt = (v) => parseFloat(v.toFixed(4)).toString();
+
+    function basePow(base) {
+        const b = parseFloat(base.toFixed(4));
+        if (b === 1) return null;
+        if (b < 0) return `\\left(${fmt(b)}\\right)^{n-1}`;
+        return `${fmt(b)}^{n-1}`;
+    }
+
+    function term(coeff, base) {
+        const c = parseFloat(coeff.toFixed(4));
+        if (c === 0) return null;
+        const pow = basePow(base);
+        if (!pow) return fmt(c);
+        if (c === 1) return pow;
+        if (c === -1) return `-${pow}`;
+        return `${fmt(c)} \\cdot ${pow}`;
+    }
+
+    function join(t1, t2) {
+        if (!t1 && !t2) return "0";
+        if (!t1) return t2;
+        if (!t2) return t1;
+        return t2.startsWith("-") ? `${t1} ${t2}` : `${t1} + ${t2}`;
+    }
+
+    switch (result.type) {
+        case "invalid":
+            return null;
+        case "trivial":
+            return "\\text{Any sequence of numbers satisfies the condition.}";
+        case "zero_sequence":
+            return "a_n = 0";
+        case "first_order": {
+            const { r, a1: v } = result;
+            if (r === 0) return `a_1 = ${fmt(v)},\\quad a_n = 0 \\;(n \\geq 2)`;
+            if (r === 1) return `a_n = ${fmt(v)}`;
+            return `a_n = ${term(v, r) ?? "0"}`;
+        }
+        case "two_roots": {
+            const { x1, x2, A, B } = result;
+            return `a_n = ${join(term(A, x1), term(B, x2))}`;
+        }
+        case "repeated": {
+            const { x, A, B } = result;
+            const Af = parseFloat(A.toFixed(4));
+            const Bf = parseFloat(B.toFixed(4));
+            const Astr = Af === 1 ? "" : Af === -1 ? "-" : fmt(Af);
+            const signB = Bf >= 0 ? "+" : "-";
+            let inner;
+            if (Af === 0) inner = fmt(Bf);
+            else if (Bf === 0) inner = `${Astr}(n-1)`;
+            else inner = `${Astr}(n-1) ${signB} ${fmt(Math.abs(Bf))}`;
+            const pow = basePow(x);
+            return pow
+                ? `a_n = \\left(${inner}\\right) \\cdot ${pow}`
+                : `a_n = ${inner}`;
+        }
+        case "repeated_zero":
+            return `a_1 = ${fmt(result.a1)},\\quad a_2 = ${fmt(result.a2)},\\quad a_n = 0 \\;(n \\geq 3)`;
+        case "complex": {
+            const { r, theta, C1, C2 } = result;
+            const cosT = `\\cos\\!\\left(${fmt(theta)}(n-1)\\right)`;
+            const sinT = `\\sin\\!\\left(${fmt(theta)}(n-1)\\right)`;
+
+            function trigTerm(coeff, trig) {
+                const c = parseFloat(coeff.toFixed(4));
+                if (c === 0) return null;
+                if (c === 1) return trig;
+                if (c === -1) return `-${trig}`;
+                return `${fmt(c)} \\cdot ${trig}`;
+            }
+
+            const inner = join(trigTerm(C1, cosT), trigTerm(C2, sinT));
+            const pow = basePow(r);
+            return pow
+                ? `a_n = ${pow} \\left[ ${inner} \\right]`
+                : `a_n = ${inner}`;
+        }
     }
 }
 
@@ -29,39 +132,16 @@ document.getElementById("recurrence-form").addEventListener("submit", function (
     let a1 = parseFloat(document.getElementById("a1").value);
     let a2 = parseFloat(document.getElementById("a2").value);
 
-    let result = solveRecurrence(a, b, c, a1, a2);
-    let solutionDiv = document.getElementById("solution");
+    const result = solveRecurrence(a, b, c, a1, a2);
+    const solutionDiv = document.getElementById("solution");
 
-    function formatCoefficient(coefficient) {
-        // Check if the coefficient is positive or negative and add the appropriate sign
-        if (coefficient >= 0) {
-            return `${coefficient.toFixed(2)}`;
-        } else {
-            return `<img src="https://latex.codecogs.com/svg.image?-" /> ${Math.abs(coefficient).toFixed(2)}`;
-        }
+    if (result.type === "invalid") {
+        solutionDiv.innerHTML = `<span class="result-error">${result.message}</span>`;
+        MathJax.typesetPromise([solutionDiv]);
+        return;
     }
-
-    if (result.x1 !== null && result.x2 !== null) {
-        solutionDiv.innerHTML = `<span class="result-text">
-            <img src = https://latex.codecogs.com/svg.image?a_{n}= /> 
-            ${result.A.toFixed(2)} 
-            <img src = https://latex.codecogs.com/svg.image?%2A%28 />${result.x1.toFixed(2)}
-            <img src = https://latex.codecogs.com/svg.image?%29^{n-1} />
-            ${formatCoefficient(result.B)} 
-            <img src = https://latex.codecogs.com/svg.image?%2A%28 />${result.x2.toFixed(2)}<img src = https://latex.codecogs.com/svg.image?%29^{n-1} /></span>`;
-    } else if (result.x1 !== null) {
-        solutionDiv.innerHTML = `<span class="result-text">
-            <img src = https://latex.codecogs.com/svg.image?a_{n}= /> 
-            <img src = https://latex.codecogs.com/svg.image?%28 />
-            ${result.A.toFixed(2)} 
-            <img src = https://latex.codecogs.com/svg.image?%2A%28n-1%29+ /> 
-            ${result.B.toFixed(2)}
-            <img src = https://latex.codecogs.com/svg.image?%29%2A%28 />
-            ${result.x1.toFixed(2)}
-            <img src = https://latex.codecogs.com/svg.image?%29^{n-1} /></span>`;
-    } else {
-        solutionDiv.innerHTML = result.B;
-    }
+    solutionDiv.innerHTML = `$$${buildLatex(result)}$$`;
+    MathJax.typesetPromise([solutionDiv]);
 });
 
 // Common mathematical formulas (language-independent)

@@ -211,6 +211,12 @@ button:hover {
     margin-top: 30px;
 }
 
+.result-error {
+    color: #c0392b;
+    font-size: 15px;
+    padding: 10px;
+}
+
 .result-text {
     width: 100%;
     min-height: 50px;
